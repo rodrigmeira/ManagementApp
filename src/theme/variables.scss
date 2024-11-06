@@ -1,2 +1,53 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+:root {
+  // Primary Colors
+  --ion-color-primary: #4a90e2;
+  --ion-color-primary-rgb: 74, 144, 226;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #4285c8;
+  --ion-color-primary-tint: #5a9bed;
+
+  // Secondary Colors
+  --ion-color-secondary: #50c878;
+  --ion-color-secondary-rgb: 80, 200, 120;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #46b06a;
+  --ion-color-secondary-tint: #63d285;
+
+  // Tertiary Colors
+  --ion-color-tertiary: #f7b32b;
+  --ion-color-tertiary-rgb: 247, 179, 43;
+  --ion-color-tertiary-contrast: #000000;
+  --ion-color-tertiary-contrast-rgb: 0, 0, 0;
+  --ion-color-tertiary-shade: #d39f25;
+  --ion-color-tertiary-tint: #fab64f;
+
+  // Dark Theme Colors
+  --ion-color-dark: #1e2025;
+  --ion-color-dark-rgb: 30, 32, 37;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #191b1f;
+  --ion-color-dark-tint: #292b30;
+
+  // Light Theme Colors
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 245, 248;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8dc;
+  --ion-color-light-tint: #f5f6f9;
+
+  // Custom Colors
+  --ion-color-success: #10dc60;
+  --ion-color-warning: #ffce00;
+  --ion-color-danger: #f04141;
+  --ion-color-medium: #989aa2;
+  --ion-color-background: #ffffff;
+
+  // Background and Text Colors
+  --ion-background-color: #f4f5f8;
+  --ion-text-color: #333333;
+  --ion-toolbar-background: var(--ion-color-primary);
+}
