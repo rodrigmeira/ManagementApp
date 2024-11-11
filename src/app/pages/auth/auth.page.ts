@@ -28,7 +28,7 @@ export class AuthPage implements OnInit {
       this.firebaseSvc
         .signIn(this.form.value as User)
         .then((res) => {
-          console.log(res);
+          this.getUserInfo(res.user.uid);
         })
         .catch((error) => {
           console.log(error);
@@ -37,6 +37,45 @@ export class AuthPage implements OnInit {
             message: error.message,
             color: 'danger',
             duration: 2500,
+            position: 'bottom',
+            icon: 'alert-circle-outline',
+          });
+        })
+        .finally(() => {
+          loading.dismiss();
+        });
+    }
+  }
+
+  async getUserInfo(uid: string) {
+    if (this.form.valid) {
+      const loading = await this.utilsSvc.loading();
+      await loading.present();
+
+      let path = `users/${uid}`;
+
+      this.firebaseSvc
+        .getDocument(path)
+        .then((user: User) => {
+          this.utilsSvc.saveInLocalStorage('user', user);
+          this.utilsSvc.routerLink('/main/home');
+          this.form.reset();
+
+          this.utilsSvc.presentToast({
+            message: `Bem-vindo ${user.name}`,
+            duration: 1500,
+            color: 'primary',
+            position: 'bottom',
+            icon: 'person-circle-outline',
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+
+          this.utilsSvc.presentToast({
+            message: error.message,
+            duration: 2500,
+            color: 'danger',
             position: 'bottom',
             icon: 'alert-circle-outline',
           });
