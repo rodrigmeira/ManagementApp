@@ -9,8 +9,20 @@ import {
 } from 'firebase/auth';
 import { User } from '../models/user.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { getFirestore, setDoc, doc, getDoc } from '@angular/fire/firestore';
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  getDoc,
+  addDoc,
+  collection,
+  collectionData,
+  query,
+  updateDoc
+} from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
+import { AngularFireStorage } from '@angular/fire/compat/storage'
+import { getStorage, uploadString, ref, getDownloadURL } from 'firebase/storage'
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +30,7 @@ import { UtilsService } from './utils.service';
 export class FirebaseService {
   auth = inject(AngularFireAuth);
   firestore = inject(AngularFirestore);
+  storage = inject(AngularFireStorage);
   utilSvc = inject(UtilsService);
 
   //Authentication
@@ -50,6 +63,11 @@ export class FirebaseService {
     return setDoc(doc(getFirestore(), path), data);
   }
 
+  //Update document
+  updateDocument(path: string, data: any) {
+    return updateDoc(doc(getFirestore(), path), data);
+  }
+
   //Get document
   async getDocument(path: string) {
     return (await getDoc(doc(getFirestore(), path))).data();
@@ -65,5 +83,26 @@ export class FirebaseService {
     getAuth().signOut();
     localStorage.removeItem('user');
     this.utilSvc.routerLink('/auth');
+  }
+
+  //Add document
+  addDocument(path: string, data: any) {
+    return addDoc(collection(getFirestore(), path), data);
+  }
+
+  //Storage
+  async uploadImage(path: string, data_url: string) {
+    return uploadString(ref(getStorage(), path), data_url, 'data_url').then(() => {
+      return getDownloadURL(ref(getStorage(), path))
+    })
+  }
+
+  getCollectionData(path: string, collectionQuery?: any) {
+    const ref = collection(getFirestore(), path);
+    return collectionData(query(ref, collectionQuery), {idField: 'id'});
+  }
+
+  async getFilePath(url: string) {
+    return ref(getStorage(), url).fullPath
   }
 }
