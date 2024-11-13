@@ -18,11 +18,18 @@ import {
   collection,
   collectionData,
   query,
-  updateDoc
+  updateDoc,
+  deleteDoc,
 } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
-import { AngularFireStorage } from '@angular/fire/compat/storage'
-import { getStorage, uploadString, ref, getDownloadURL } from 'firebase/storage'
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import {
+  getStorage,
+  uploadString,
+  ref,
+  getDownloadURL,
+  deleteObject,
+} from 'firebase/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -68,6 +75,11 @@ export class FirebaseService {
     return updateDoc(doc(getFirestore(), path), data);
   }
 
+  //Delete document
+  deleteDocument(path: string) {
+    return deleteDoc(doc(getFirestore(), path));
+  }
+
   //Get document
   async getDocument(path: string) {
     return (await getDoc(doc(getFirestore(), path))).data();
@@ -92,17 +104,23 @@ export class FirebaseService {
 
   //Storage
   async uploadImage(path: string, data_url: string) {
-    return uploadString(ref(getStorage(), path), data_url, 'data_url').then(() => {
-      return getDownloadURL(ref(getStorage(), path))
-    })
+    return uploadString(ref(getStorage(), path), data_url, 'data_url').then(
+      () => {
+        return getDownloadURL(ref(getStorage(), path));
+      }
+    );
   }
 
   getCollectionData(path: string, collectionQuery?: any) {
     const ref = collection(getFirestore(), path);
-    return collectionData(query(ref, collectionQuery), {idField: 'id'});
+    return collectionData(query(ref, ...collectionQuery), { idField: 'id' });
   }
 
   async getFilePath(url: string) {
-    return ref(getStorage(), url).fullPath
+    return ref(getStorage(), url).fullPath;
+  }
+
+  deleteFile(path: string) {
+    return deleteObject(ref(getStorage(), path));
   }
 }

@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {
+  AlertController,
+  AlertOptions,
   LoadingController,
   ModalController,
   ModalOptions,
@@ -17,10 +19,9 @@ export class UtilsService {
   toastCtrl = inject(ToastController);
   modalCtrl = inject(ModalController);
   router = inject(Router);
+  alertCtrl = inject(AlertController);
 
-
-
- async takePicture(promptLabelHeader: string) {
+  async takePicture(promptLabelHeader: string) {
     return await Camera.getPhoto({
       quality: 90,
       allowEditing: true,
@@ -28,10 +29,15 @@ export class UtilsService {
       source: CameraSource.Prompt,
       promptLabelHeader,
       promptLabelPhoto: 'Selecione uma imagem.',
-      promptLabelPicture: 'Tire uma foto.'
+      promptLabelPicture: 'Tire uma foto.',
     });
+  }
 
-  };
+  async presentAlert(opts?: AlertOptions) {
+    const alert = await this.alertCtrl.create(opts);
+
+    await alert.present();
+  }
 
   loading() {
     return this.loadingCtrl.create({ spinner: 'lines' });

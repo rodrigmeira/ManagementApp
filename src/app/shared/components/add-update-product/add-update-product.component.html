@@ -1,4 +1,7 @@
-<app-header [isModal]="true" [title]="product ? 'Atualizar produto' : 'Adicionar Produto'"></app-header>
+<app-header
+  [isModal]="true"
+  [title]="product ? 'Atualizar produto' : 'Adicionar Produto'"
+></app-header>
 <ion-content>
   <form
     [formGroup]="form"
@@ -10,9 +13,13 @@
       <img [src]="form.value.image" />
     </ion-avatar>
 
-    <ion-icon class="image-icon" *ngIf="!form.value.image" name="image-outline"></ion-icon>
+    <ion-icon
+      class="image-icon"
+      *ngIf="!form.value.image"
+      name="image-outline"
+    ></ion-icon>
 
-    <br>
+    <br />
 
     <ion-button (click)="takeImage()" mode="ios" size="small" shape="round">
       Inserir imagem
@@ -42,6 +49,7 @@
       [control]="form.controls.price"
       type="number"
       label="Preço"
+      (ionInput)="setNumberInputs()"
     ></app-custom-input>
 
     <div
@@ -60,6 +68,7 @@
       [control]="form.controls.soldUnits"
       type="number"
       label="Unidades vendidas"
+      (ionInput)="setNumberInputs()"
     ></app-custom-input>
 
     <div
@@ -80,7 +89,7 @@
       type="submit"
       [disabled]="form.invalid"
     >
-      {{product ? 'Atualizar produto' : 'Adicionar Produto'}}
+      {{ product ? "Atualizar produto" : "Adicionar Produto" }}
       <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
     </ion-button>
   </form>
